@@ -7,16 +7,18 @@ using System.Threading.Tasks;
 
 namespace Ship
 {
-   class Program
+    class Program
     {
         static void Main(string[] args)
         {
-            List<Double []> st = new List<Double []>();
-
+            List<Double[]> st = new List<Double[]>();
+        //(@"C:\\Users\\Alex\\source\\repos\\Ship\\Ship\\Ship\\MarineRepository\\Compartments\\Data\\CargoHold1.csv"))
+        //:\Users\Alex\source\repos\Ship\Ship\Ship\Resource1.resx
+        //C: \Users\USER\source\repos\Ship\Ship\MarineRepository\Compartments\Data
             try
             {
                 foreach (string line in System.IO.File.ReadLines(@"C:\\Users\\USER\\source\\repos\\Ship\\Ship\\MarineRepository\\Compartments\\Data\\CargoHold1.csv"))
-                    st.Add(line.Trim().Replace('.',',').Split(';').Select(double.Parse).ToArray());
+                    st.Add(line.Trim().Replace('.', ',').Split(';').Select(double.Parse).ToArray());
             }
             catch (Exception e)
             {
@@ -36,26 +38,72 @@ namespace Ship
             //Console.WriteLine(st[5][9]);
             //Console.Read();
 
-            Console.WriteLine("Input x:");
-            double x = 150;//Convert.ToDouble(Console.ReadLine());
-            int x1 = -1, x2 = -1;
-            for (int i = 0; i < cargo.Count; i++)
+            Console.WriteLine("Input vi:");
+            double vi = 250;//Convert.ToDouble(Console.ReadLine());
+            double xmin = 0, xmax = 33.36;
+            //  for (int i = 0; i < cargo.Count; i++)
+            //Console.WriteLine(st1[0]);
+
+            for (int i = 0; i < cargo[i].X; i++)
             {
-                //Console.WriteLine(st1[0]);
-                    
-                if (cargo[i].Volume > x)
+                if (cargo[i].Volume > vi)
                 {
-                    x1 = i - 1;
-                    x2 = i;
+                    xmin = i - 1; //x1 = xmin
+                    xmax = i; //x2 =  xmax  
                     break;
                 }
-            
             }
-            Console.WriteLine(x1 + "   " + x2);
-            double y = ((cargo[x1].Y == cargo[x2].Y) ? cargo[x1].Y : Math.Abs((x - x1) * (cargo[x1].Y - cargo[x2].Y) / (x2 - x1)));
-             Console.WriteLine(y);
+            int ymin = -1, ymax = -1;
+            for (int k = 0; k < cargo.Count; k++)
+            {
+                if (cargo[k].Y > vi)
+                {
+                    ymin = k - 1; //y1 = ymin
+                    ymax = k; //y2 =  ymax  
+                    break;
+                }
+            }
+            int zmin = -1, zmax = -1;
+            for (int n = 0; n < cargo.Count; n++)
+            {
+                if (cargo[n].Z > vi)
+                {
+                    ymin = n - 1; //y1 = ymin
+                    ymax = n; //y2 =  ymax  
+                    break;
+                }
+            }
+            int vmin = -1, vmax = -1;
+            for (int j = 0; j < cargo.Count; j++)
+            {
+                //Console.WriteLine(st1[0]);
+
+                if (cargo[j].Volume > vi)
+                {
+                    vmin = j - 1; //v1 = vmin
+                    vmax = j; //v2 =  vmax  
+                    break;
+                }
+            }
 
 
+
+            Console.WriteLine(xmin + "   " + xmax);
+            Console.WriteLine(ymin + "   " + ymax);
+            Console.WriteLine(zmin + "   " + zmax);
+
+            // int vmin = Cargo.[1].GetMinElement();
+            // int minValue = numbers.Cast<int>().Max();
+
+            double xi = Math.Abs((((xmax - xmin)) / (cargo[vmax].Volume - cargo[vmin].Volume)) * (vi - vmin) + xmax);
+            double yi = Math.Abs(((ymax - ymin)) / (cargo[vmax].Volume - cargo[vmin].Volume) * (vi - vmin) + ymax);
+            double zi = Math.Abs(((zmax - zmin)) / (cargo[vmax].Volume - cargo[vmin].Volume) * (vi - vmin) + zmax);
+            //double y = ((cargo[x1].Y == cargo[x2].Y) ? cargo[x1].Y : Math.Abs((x - x1) * (cargo[x1].Y - cargo[x2].Y) / (x2 - x1)));
+            Console.WriteLine(xi);
+            Console.WriteLine(yi);
+            Console.WriteLine(zi);
+            Console.WriteLine(vmax);
+            Console.WriteLine(vmin);
             Console.Read();
 
         }
@@ -101,5 +149,3 @@ namespace Ship
 
     }
 }
-
-
